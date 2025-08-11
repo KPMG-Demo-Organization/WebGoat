@@ -14,12 +14,35 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+//@RestController
+//public class JWTController {
+
+  //@GetMapping("/jwt")
+  //public ModelAndView jwt() {
+    //return new ModelAndView("jwt");
+  //}
+
+  //@PostMapping(
+      //value = "/jwt/decode",
+      //consumes = APPLICATION_FORM_URLENCODED_VALUE,
+      //produces = APPLICATION_JSON_VALUE)
+  //public JWTToken decode(@RequestBody MultiValueMap<String, String> formData) {
+    //var jwt = formData.getFirst("token");
+    //var secretKey = formData.getFirst("secretKey");
+    //return JWTToken.decode(jwt, secretKey);
+  //}
+
 @RestController
 public class JWTController {
 
   @GetMapping("/jwt")
-  public ModelAndView jwt() {
-    return new ModelAndView("jwt");
+  public ModelAndView jwt(@RequestParam(name = "username", required = false) String username) {
+    ModelAndView modelAndView = new ModelAndView("jwt");
+    
+    // Intentionally vulnerable code: Directly embedding user input into an attribute or page content
+    modelAndView.addObject("username", username);
+    
+    return modelAndView;
   }
 
   @PostMapping(
@@ -29,8 +52,11 @@ public class JWTController {
   public JWTToken decode(@RequestBody MultiValueMap<String, String> formData) {
     var jwt = formData.getFirst("token");
     var secretKey = formData.getFirst("secretKey");
+
     return JWTToken.decode(jwt, secretKey);
   }
+}
+
 
   @PostMapping(
       value = "/jwt/encode",
