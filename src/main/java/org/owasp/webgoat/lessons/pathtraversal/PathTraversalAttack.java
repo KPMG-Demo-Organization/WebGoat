@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import java.io.*;
 import javax.servlet.http.HttpServletResponse;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Component
 @RestController
@@ -20,8 +22,14 @@ public class PathTraversalVulnerability {
 
     @GetMapping("/read")
     public void readFile(@RequestParam("filename") String filename, HttpServletResponse response) throws IOException {
-        // Vulnerable: does not sanitize user input, allowing path traversal
-        File file = new File(BASE_DIRECTORY + filename);
+        // Validate user input to prevent path traversal vulnerabilities
+        Path basePath = Paths.get(BASE_DIRECTORY).toAbsolutePath().normalize();
+        Path filePath = basePath.resolve(filename).normalize();
+        if (!filePath.startsWith(basePath)) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid file path");
+            return;
+        }
+        File file = filePath.toFile();
         if (file.exists() && file.isFile()) {
             try (FileInputStream fis = new FileInputStream(file);
                  OutputStream os = response.getOutputStream()) {
