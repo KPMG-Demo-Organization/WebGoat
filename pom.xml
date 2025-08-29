@@ -77,7 +77,7 @@
     <java.version>23</java.version>
     <jaxb.version>2.3.1</jaxb.version>
     <jjwt.version>0.9.1</jjwt.version>
-    <jose4j.version>0.9.3</jose4j.version>
+    <jose4j.version>0.9.4</jose4j.version>
     <jquery.version>3.7.1</jquery.version>
     <jsoup.version>1.19.1</jsoup.version>
     <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
@@ -96,7 +96,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <thymeleaf.version>3.1.2.RELEASE</thymeleaf.version>
     <waittimeForServerStart>60</waittimeForServerStart>
-    <webdriver.version>6.0.1</webdriver.version>
+    <webdriver.version>6.1.0</webdriver.version>
     <webgoat.context>/WebGoat</webgoat.context>
     <webgoat.port>8080</webgoat.port>
     <webgoat.sslenabled>false</webgoat.sslenabled>
@@ -105,7 +105,7 @@
     <webwolf.port>9090</webwolf.port>
     <wiremock.version>3.12.1</wiremock.version>
     <xml-resolver.version>1.2</xml-resolver.version>
-    <xstream.version>1.4.5</xstream.version>
+    <xstream.version>1.4.21</xstream.version>
     <!-- do not update necessary for lesson -->
     <zxcvbn.version>1.9.0</zxcvbn.version>
   </properties>
@@ -217,7 +217,7 @@
       <dependency>
         <groupId>org.jruby</groupId>
         <artifactId>jruby</artifactId>
-        <version>9.4.12.0</version>
+        <version>9.4.12.1</version>
       </dependency>
       <dependency>
         <groupId>com.microsoft.playwright</groupId>
