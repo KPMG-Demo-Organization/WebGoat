@@ -24,6 +24,16 @@ public class Servers {
 
   private final LessonDataSource dataSource;
 
+  // Allowed columns for sorting
+  private static final List<String> ALLOWED_COLUMNS = List.of(
+    "id",
+    "hostname",
+    "ip",
+    "mac",
+    "status",
+    "description"
+  );
+
   @AllArgsConstructor
   @Getter
   private class Server {
@@ -45,12 +55,15 @@ public class Servers {
   public List<Server> sort(@RequestParam String column) throws Exception {
     List<Server> servers = new ArrayList<>();
 
+    // Validate column name against allowed list
+    if (!ALLOWED_COLUMNS.contains(column)) {
+      throw new IllegalArgumentException("Invalid column name");
+    }
+
     try (var connection = dataSource.getConnection()) {
-      try (var statement =
-          connection.prepareStatement(
-              "select id, hostname, ip, mac, status, description from SERVERS where status <> 'out"
-                  + " of order' order by "
-                  + column)) {
+      String sql =
+        "select id, hostname, ip, mac, status, description from SERVERS where status <> 'out of order' order by " + column;
+      try (var statement = connection.prepareStatement(sql)) {
         try (var rs = statement.executeQuery()) {
           while (rs.next()) {
             Server server =
